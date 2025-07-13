@@ -6,7 +6,6 @@ const ContactForm = ({ onAddContact }) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const [error, setError] = useState(''); 
-
   const nameInputRef = useRef(null);
   const numberInputRef = useRef(null);
 
@@ -25,17 +24,19 @@ const ContactForm = ({ onAddContact }) => {
   const handleSubmit = event => {
     event.preventDefault();
 
-    const phoneRegex = /^\+?\d{1,4}[-.\s]?\(?\d{1,3}\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/;
+  
+    const phoneRegex = /^\d{3}-\d{2}-\d{2}$|^\d{10,14}$/;
     if (!phoneRegex.test(number)) {
-      setError('The phone number is not in the right format.');
+      setError('The phone number is not in the correct format.'); 
       return;
     }
 
     onAddContact(name, number);
-
     setName('');
     setNumber('');
     setError(''); 
+
+   
     nameInputRef.current.focus();
   };
 
@@ -51,7 +52,7 @@ const ContactForm = ({ onAddContact }) => {
           required
           value={name}
           onChange={handleChange}
-          ref={nameInputRef}
+          ref={nameInputRef} 
           placeholder="Ex: Jack Sparrow"
         />
       </label>
@@ -65,7 +66,7 @@ const ContactForm = ({ onAddContact }) => {
           required
           value={number}
           onChange={handleChange}
-          ref={numberInputRef}
+          ref={numberInputRef} 
           placeholder="Ex: 123-44-56"
         />
       </label>
